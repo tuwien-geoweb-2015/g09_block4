@@ -18,8 +18,8 @@ var map = new ol.Map({
 });
 var url = 'http://student.ifip.tuwien.ac.at/geoserver/wfs';
 var layer = 'feedback';
-var prefix = 'ifip_2015'; // Ersetzen durch euren Arbeitsbereich-Namen
-var featureNS = 'http://ifip/2015'; // Ersetzen durch eure Namensraum-URI
+var prefix = 'g09_2015'; // Ersetzen durch euren Arbeitsbereich-Namen
+var featureNS = 'http://g09/2015'; // Ersetzen durch eure Namensraum-URI
 var form = document.getElementById('feedback');
 
 var feature = new ol.Feature();
@@ -32,4 +32,28 @@ send(form, feature, url, {
   featurePrefix: prefix,
   featureNS: featureNS,
   srsName: map.getView().getProjection().getCode()
+});
+
+var feedbackPoints = new ol.source.Vector({
+  features: new ol.Collection(),
+});
+map.addLayer(new ol.layer.Vector({ source: feedbackPoints }));
+feedbackPoints.addFeature(feature);
+var modify = new ol.interaction.Modify({
+  features: feedbackPoints.getFeaturesCollection()
+});
+map.addInteraction(modify);
+
+var modify = new ol.interaction.Modify({
+  features: feedbackPoints.getFeaturesCollection()
+});
+map.addInteraction(modify);
+
+var geolocation = new ol.Geolocation({
+  projection: map.getView().getProjection(),
+  tracking: true
+});
+geolocation.once('change:position', function(evt) {
+  feature.getGeometry().setCoordinates(geolocation.getPosition());
+  map.getView().setCenter(geolocation.getPosition());
 });
