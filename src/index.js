@@ -17,7 +17,7 @@ var map = new ol.Map({
   })
 });
 var url = 'http://student.ifip.tuwien.ac.at/geoserver/wfs';
-var layer = 'feedback';
+var layer = 'g09_feedback';
 var prefix = 'g09_2015'; // Ersetzen durch euren Arbeitsbereich-Namen
 var featureNS = 'http://g09/2015'; // Ersetzen durch eure Namensraum-URI
 var form = document.getElementById('feedback');
