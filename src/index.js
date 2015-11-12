@@ -9,13 +9,16 @@ var map = new ol.Map({
   layers: [
     new ol.layer.Tile({
       source: new ol.source.OSM()
+    }),
+    new ol.layer.Tile({
+      source: new ol.source.TileWMS({
+        url: url,
+        params: {LAYERS: prefix + ':' + layer}
+      })
+    }),
+    new ol.layer.Vector({
+      source: feedbackPoints
     })
-	new ol.layer.Tile({ 
-	source: new ol.source.TileWMS({ 
-	url: url, 
-	params: {LAYERS: prefix + ':' + layer} 
-	}) 
-	})
   ],
   view: new ol.View({
     center: ol.proj.fromLonLat([16.373064, 48.20833]),
