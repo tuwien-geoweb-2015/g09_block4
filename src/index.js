@@ -10,6 +10,12 @@ var map = new ol.Map({
     new ol.layer.Tile({
       source: new ol.source.OSM()
     })
+	new ol.layer.Tile({ 
+	source: new ol.source.TileWMS({ 
+	url: url, 
+	params: {LAYERS: prefix + ':' + layer} 
+	}) 
+	})
   ],
   view: new ol.View({
     center: ol.proj.fromLonLat([16.373064, 48.20833]),
